@@ -1,5 +1,30 @@
 import React, { useEffect, useState } from "react";
 
+function storageMock() {
+  let storage = {};
+
+  return {
+    setItem: function (key, value) {
+      storage[key] = value || "";
+    },
+    getItem: function (key) {
+      return key in storage ? storage[key] : null;
+    },
+    removeItem: function (key) {
+      delete storage[key];
+    },
+    get length() {
+      return Object.keys(storage).length;
+    },
+    key: function (i) {
+      const keys = Object.keys(storage);
+      return keys[i] || null;
+    },
+  };
+}
+
+const sessionStorage =
+  typeof window === "object" ? window.sessionStorage : storageMock();
 const getStars = async () => {
   try {
     const res = await fetch(
@@ -16,17 +41,17 @@ const getStars = async () => {
 };
 export default ({ children }) => {
   const [stars, setStars] = useState(
-    window.sessionStorage.getItem("appbase_rs_star_count")
+    sessionStorage.getItem("appbase_rs_star_count")
   );
   useEffect(() => {
-    const sessionData = window.sessionStorage.getItem("appbase_rs_star_count");
+    const sessionData = sessionStorage.getItem("appbase_rs_star_count");
     console.log("session data", sessionData);
     if (!sessionData) {
       async function fetchData() {
         const currentStars = await getStars();
         console.log("stars", currentStars);
         setStars(currentStars);
-        window.sessionStorage.setItem("appbase_rs_star_count", currentStars);
+        sessionStorage.setItem("appbase_rs_star_count", currentStars);
       }
       fetchData();
     }
