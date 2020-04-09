@@ -134,3 +134,399 @@ yarn add @appbaseio/reactivesearch
 In the next video we will see how to build **Search** for Yelp Data.
 
 </Layout>
+
+---
+
+<Layout>
+
+# DataSearch
+
+</Layout>
+
+---
+
+<Layout>
+
+Let us once again see how  
+our Search UI would look alike
+
+</Layout>
+
+---
+
+![](https://www.dropbox.com/s/ldqln6g8wnmgv3a/Screenshot%202020-04-09%2006.07.01.png?raw=1)
+
+---
+
+<Layout>
+    
+Now let us start building a Search box.
+
+</Layout>
+
+---
+
+<Layout>
+
+## Sample Code
+
+```
+<DataSearch
+    componentId="SearchSensor"
+    dataField={["name", "name.search", "name.autosuggest"]}
+    onValueSelected={(value, cause, source) => {
+        console.log("value", value);
+        console.log("source", source);
+    }}
+/>
+```
+
+**Ref: https://docs.appbase.io/docs/reactivesearch/v3/search/datasearch/**
+
+</Layout>
+
+---
+
+<Layout>
+
+## Quick Demo
+
+</Layout>
+
+---
+
+<Layout>
+
+Adding More fields to search
+
+```
+<DataSearch
+    componentId="SearchSensor"
+    dataField={[
+        "name",
+        "name.search",
+        "name.autosuggest",
+        "city",
+        "city.search",
+        "city.autosuggest"
+    ]}
+    onValueSelected={(value, cause, source) => {
+        console.log("value", value);
+        console.log("source", source);
+    }}
+/>
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+Adding field weights
+
+```
+<DataSearch
+    componentId="SearchSensor"
+    dataField={[
+        "name",
+        "name.search",
+        "name.autosuggest",
+        "city",
+        "city.search",
+        "city.autosuggest"
+    ]}
+    fieldWeights={[3, 1, 1, 2, 1, 1]}
+    onValueSelected={(value, cause, source) => {
+        console.log("value", value);
+        console.log("source", source);
+    }}
+/>
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+In the next video we will see how we can add category filter.
+
+</Layout>
+
+---
+
+<Layout>
+
+# MultiList
+
+</Layout>
+
+---
+
+<Layout>
+
+Let us once again see how  
+our Search + Filter UI would look alike
+
+</Layout>
+
+---
+
+![](https://www.dropbox.com/s/ldqln6g8wnmgv3a/Screenshot%202020-04-09%2006.07.01.png?raw=1)
+
+---
+
+<Layout>
+    
+Now let us start building a Category Filter
+
+</Layout>
+
+---
+
+<Layout>
+
+## Sample Code
+
+```
+<MultiList
+    componentId="CategorySensor"
+    dataField="categories.keyword"
+/>
+```
+
+**Ref: https://docs.appbase.io/docs/reactivesearch/v3/list/multilist/**
+
+</Layout>
+
+---
+
+<Layout>
+
+## Quick Demo
+
+</Layout>
+
+---
+
+<Layout>
+
+In the next video we will see how we can add search results to our UI
+
+</Layout>
+
+---
+
+<Layout>
+
+# ReactiveList
+
+</Layout>
+
+---
+
+<Layout>
+
+Let us once again see how  
+our Search + Filter UI + Results would look alike
+
+</Layout>
+
+---
+
+![](https://www.dropbox.com/s/ldqln6g8wnmgv3a/Screenshot%202020-04-09%2006.07.01.png?raw=1)
+
+---
+
+<Layout>
+    
+Now let us start building a Result UI.
+
+</Layout>
+
+---
+
+<Layout>
+
+## Sample Code
+
+```
+<ReactiveList
+	componentId="SearchResult"
+	react={{
+		and: ['CategorySensor', 'SearchSensor'],
+	}}
+	renderItem={res => <div>{res.name}</div>}
+/>
+```
+
+**Ref: https://docs.appbase.io/docs/reactivesearch/v3/result/reactivelist/**
+
+</Layout>
+
+---
+
+<Layout>
+
+## Quick Demo
+
+</Layout>
+
+---
+
+<Layout>
+
+Now let us see some more props that can help  
+us modify styles for the result easily
+
+</Layout>
+
+---
+
+<Layout>
+
+## Quick Demo of `<ResultList />`
+
+**Ref: https://docs.appbase.io/docs/reactivesearch/v3/result/resultlist/**
+
+</Layout>
+
+---
+
+<Layout>
+
+In the next video we will see how we can add Reactive Map to our UI
+
+</Layout>
+
+---
+
+<Layout>
+
+# ReactiveMap
+
+</Layout>
+
+---
+
+<Layout>
+
+ReactiveMap helps us create a data-driven map UI component using [Google Maps](https://docs.appbase.io/docs/reactivesearch/v3/map/reactivegooglemap/) / [Openstreet Map](https://docs.appbase.io/docs/reactivesearch/v3/map/reactiveopenstreetmap/).  
+It is the key component for building map based experiences
+
+</Layout>
+
+---
+
+<Layout>
+
+Let us once again see how  
+our Search + Filter UI + Results + Map would look alike
+
+</Layout>
+
+---
+
+![](https://www.dropbox.com/s/ldqln6g8wnmgv3a/Screenshot%202020-04-09%2006.07.01.png?raw=1)
+
+---
+
+<Layout>
+    
+Now let us start building a Map UI.
+
+</Layout>
+
+---
+
+<Layout>
+
+## Install ReactiveMap
+
+```
+yarn add @appbaseio/reactivemaps
+```
+
+_ReactiveMap is part of separate package, but still works  
+like any other ReactiveSearch Component_
+
+</Layout>
+
+---
+
+<Layout>
+
+## Getting Started with ReactiveMap
+
+- `<ReactiveGoogleMap />`
+- `<ReactiveOpenStreetMap />`
+
+We will be using `<ReactiveOpenStreetMap />` to render the Map UI as it is free and open-source.
+
+</Layout>
+
+---
+
+<Layout>
+
+## Sample Code
+
+```
+import { ReactiveOpenStreetMap } from '@appbaseio/reactivemaps';
+
+<ReactiveOpenStreetMap
+	componentId="SearchResult"
+	react={{
+		and: ['CategorySensor', 'SearchSensor'],
+	}}
+    dataField="location"
+/>
+```
+
+**Ref: https://docs.appbase.io/docs/reactivesearch/v3/map/reactiveopenstreetmap/**
+
+</Layout>
+
+---
+
+<Layout>
+
+## Add map styles
+
+In order to use OpenStreetMap / GoogleMap, we need to add their styles  
+in our `index.html` or you can import it in your codebase.
+
+```
+<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/leaflet.css" rel="stylesheet" />
+```
+
+</Layout>
+
+---
+
+<Layout>
+
+Now let us see some more props that can help  
+us modify styles for the result easily and help us avoid using
+2 result component
+
+</Layout>
+
+---
+
+<Layout>
+
+## Quick Demo of `renderAllData` prop
+
+**Ref: https://docs.appbase.io/docs/reactivesearch/v3/result/resultlist/**
+
+</Layout>
+
+---
+
+<Layout>
+
+In the next video we will explore some more features of Appbase.io
+
+</Layout>

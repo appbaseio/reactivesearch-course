@@ -72,6 +72,7 @@ export default ({ children }) => {
               <a
                 href="https://github.com/appbaseio/reactivesearch"
                 target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   padding: "2px 5px 2px 4px",
                   color: "#333",
@@ -104,6 +105,7 @@ export default ({ children }) => {
               <a
                 href="https://github.com/appbaseio/dejavu/stargazers"
                 target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   marginLeft: "4px",
                   backgroundColor: " #fafafa",
